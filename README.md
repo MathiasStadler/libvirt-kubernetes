@@ -156,7 +156,7 @@ sudo swapoff -a
 sudo sed -i '/swap/s/^/#/g' /etc/fstab
 
 
-# for network
+# for network IP Virtual Server
 sudo  apt install ipvsadm
 
 ```
@@ -178,7 +178,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
 kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
 
-# on k8s-1
+# on all worker node k8s-1 , k8s-2 ...
 # this came from output
 sudo kubeadm join 192.168.178.63:6443 --token zmvzdd.26e0cioeuur5sm5d --discovery-token-ca-cert-hash sha256:fc8d658a3367430a4fa9d9a3c9d2855150433734c5734945386b1dad6fb5b9da
 
