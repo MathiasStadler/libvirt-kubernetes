@@ -6,7 +6,7 @@
 # install manjaro
 https://computingforgeeks.com/complete-installation-of-kvmqemu-and-virt-manager-on-arch-linux-and-manjaro/
 
-https://blog.alexellis.io/kvm-kubernetes-primer/
+https://blog.alexellis.io/kv-kubernetes-primer/
 https://blog.alexellis.io/your-instant-kubernetes-cluster/
 
 
@@ -22,7 +22,7 @@ https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#tabs-pod-in
 - install kubernetes
 - init kubernetes master
 - join kubernetes worker-node
-
+- enable virsh console for Ubuntu 16.4.4
 
 ## env
     - Lenovo T430 i5 RAM 16GB SSD 500GB found by my reseller
@@ -38,7 +38,7 @@ sudo pacman -S qemu virt-manager virt-viewer dnsmasq iptables vde2 bridge-utils 
 sudo pacman -S ebtables
 sudo pacman -S iptables
 
-# enbale libvirt service
+# enable libvirt service
 sudo systemctl enable libvirtd.service
 # start services
 systemctl start libvirtd.service
@@ -46,8 +46,8 @@ systemctl start libvirtd.service
 echo “options kvm-intel nested=1″ | sudo tee /etc/modprobe.d/kvm-intel.conf
 # reboot host and check
 cat /sys/module/kvm_intel/parameters/nested
-# ouput : Y every fine :-) 
-
+# output should: Y fine :-)
+```
 
 ## create bridge br0
 
@@ -96,10 +96,8 @@ sudo netctl enable bridge
 
 ```bash
 
-
 cat <<EOF >create-vm.sh
 #!/bin/sh
-
 if [ -z "\$1" ] ;
 then
  echo Specify a virtual-machine name.
@@ -119,7 +117,6 @@ sudo virt-install \
 --location 'http://gb.archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/' \
 --extra-args 'console=ttyS0,115200n8 serial'
 EOF
-
 
 chown +x create-vm.sh
 
@@ -164,6 +161,7 @@ sudo  apt install ipvsadm
 ## init kubernetes master
 
 ```bash
+
 # on k9s-master node
 sudo kubeadm init --pod-network-cidr=192.168.178.0/24
 
@@ -190,10 +188,69 @@ kubectl get nodes
 # k8s-master   NotReady   master   103m   v1.12.2
 # k8s-node1    NotReady   <none>   24s    v1.12.2
 
+```
+
+## enable virsh console for Ubuntu 16.4.4
+
+| SECURITY VIOLATION Not used in production environment.
+
+- change each libvirt config e.g. k8s-master
+
+```bash
+
+> virsh edit k8s-master
+
+# force with vi editor
+EDITOR=/usr/bin/vi virsh edit k8s-master
 
 ```
 
+- to
 
 
+```xml
 
-kubeadm join 192.168.178.63:6443 --token zmvzdd.26e0cioeuur5sm5d --discovery-token-ca-cert-hash sha256:fc8d658a3367430a4fa9d9a3c9d2855150433734c5734945386b1dad6fb5b9da
+<serial type='pty'>
+      <target type='isa-serial' port='0'>
+        <model name='isa-serial'/>
+      </target>
+</serial>
+<console type='pty'>
+      <target type='serial' port='0'/>
+</console>
+
+```
+
+- and change the /etc/default/grub config if the vm running
+
+
+``` bash
+
+# GRUB_CMDLINE_LINUX=""
+GRUB_CMDLINE_LINUX='console=ttyS0,115200'
+
+```
+
+- now can you login via console
+
+
+```bash
+
+virsh console k8s-master
+
+# press enter if see no output
+
+```
+
+- check you are login via ttyS0 used command w
+
+```bash
+
+> w
+15:32:18 up  2:08,  2 users,  load average: 0.27, 0.34, 0.23
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+ubuntu   ttyS0                     15:26    2.00s  0.10s  0.00s w
+ubuntu   pts/0    192.168.178.23   13:23    2:08m  0.04s  0.04s -bash
+
+```
+
