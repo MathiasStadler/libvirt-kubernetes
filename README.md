@@ -6,12 +6,17 @@
 # install manjaro
 https://computingforgeeks.com/complete-installation-of-kvmqemu-and-virt-manager-on-arch-linux-and-manjaro/
 
-https://blog.alexellis.io/kv-kubernetes-primer/
+https://blog.alexellis.io/kvm-kubernetes-primer/
 https://blog.alexellis.io/your-instant-kubernetes-cluster/
 
 
 # network calico
 https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#tabs-pod-install-7
+
+
+# kickstart file 
+http://manpages.ubuntu.com/manpages/cosmic/man1/virt-install.1.html
+
 ```
 
 ## TODO

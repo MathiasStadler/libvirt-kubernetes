@@ -1,0 +1,11 @@
+<volume>
+  <name>test-1.img</name>
+  <capacity>32212254720</capacity>
+  <allocation>0</allocation>
+  <target>
+    <format type="qcow2"/>
+    <features>
+      <lazy_refcounts/>
+    </features>
+  </target>
+</volume>

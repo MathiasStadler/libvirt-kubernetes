@@ -1,0 +1,2 @@
+/var/lib/libvirt/boot/virtinst-linux.12khc1rd => http://gb.archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
+/var/lib/libvirt/boot/virtinst-initrd.gz.cmlt_9j8 => /ubuntu/dists/xenial/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
