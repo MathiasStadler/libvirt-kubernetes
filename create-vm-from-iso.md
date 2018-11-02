@@ -1,13 +1,19 @@
 # create-vm-from-iso
 
-## old variante 
+## old version
 
 ```bash
+# create disk in current path
+cd /tmp
+qemu-img create mydisk.img 10G
+
+
+# start vm from iso
 qemu-system-x86_64 \
 -boot d \
 -cdrom /var/lib/libvirt/isos/ubuntu_16.4_mini.iso  \
 -m 4096 \
--drive file=/home/trapapa/playground/linux-unattended-installation/mydisk.img,index=0,media=disk,format=raw
+-drive file=/tmp/mydisk.img,index=0,media=disk,format=raw
 ```
 
 ## sources
