@@ -254,3 +254,11 @@ ubuntu   pts/0    192.168.178.23   13:23    2:08m  0.04s  0.04s -bash
 
 ```
 
+- leave the virsh console press
+
+```txt
+
+[STRG] + ]
+[STRG] + 5
+
+```
