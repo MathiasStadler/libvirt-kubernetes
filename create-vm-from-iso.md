@@ -62,6 +62,29 @@ chmod +x $CREATE_VM_FROM_ISO
 
 ```
 
+
+## newest version load iso via --location
+
+- from here
+- https://superuser.com/questions/1200180/how-to-install-vm-from-iso
+- iso from here
+- https://buildlogs.centos.org/rolling/7/isos/x86_64/CentOS-7-x86_64-Everything-1611.iso
+
+
+```bash
+
+sudo virt-install  \
+-n myvm \
+-r 2048 \
+--disk path=/var/lib/libvirt/images/centos.img,size=30 \
+--cdrom /var/lib/libvirt/isos/CentOS-7-x86_64-Everything-1611.iso \
+--graphics=none \
+--extra-args="console=tty0 console=ttyS0,115200n8" \
+--console pty,target_type=serial \
+--network=bridge:br0 \
+```
+
+
 ## connect with vnc
 
 ```bash
